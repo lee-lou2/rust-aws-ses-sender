@@ -48,6 +48,8 @@ Rust와 Tokio를 기반으로 구축되어 높은 처리량과 안정성을 제�
 
 ### AWS SES 설정하기
 
+[👉 자세히 보기: 해당 블로그를 참고해주세요](https://lee-lou2.notion.site/19d4d6ae33b58092a019ee88de9ca8a0?pvs=4)
+
 #### 1️⃣ 샌드박스 모드 해제 (프로덕션 환경)
 - AWS SES는 기본적으로 샌드박스 모드로 시작
 - 프로덕션 환경을 위해 [AWS Support Center에서 샌드박스 해제 요청](https://docs.aws.amazon.com/ses/latest/dg/request-production-access.html) 필요

@@ -48,6 +48,8 @@ Built with Rust and Tokio for exceptional throughput and reliability.
 
 ### AWS SES Configuration
 
+[👉 See details: Refer to this blog](https://lee-lou2.notion.site/19d4d6ae33b58092a019ee88de9ca8a0?pvs=4)
+
 #### 1️⃣ Sandbox Mode Removal (Production)
 - AWS SES starts in sandbox mode by default
 - Request sandbox removal through [AWS Support Center](https://docs.aws.amazon.com/ses/latest/dg/request-production-access.html) for production use
