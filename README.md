@@ -44,6 +44,8 @@ Built with Rust and Tokio for exceptional throughput and reliability.
 - ⏸ Cancel pending email sends
 - 📈 Sending statistics and analysis
 
+![img_2.png](docs/process_diagram_en.png)
+
 ## 🔧 Setup Guide
 
 ### AWS SES Configuration
@@ -63,7 +65,7 @@ Built with Rust and Tokio for exceptional throughput and reliability.
 - Register sender email in AWS SES console
 - Complete verification via confirmation email link
 
-### AWS SNS Configuration
+### AWS SNS Configuration (Optional)
 
 #### 1️⃣ Create SNS Topic
 - Create new topic in AWS SNS console
@@ -81,6 +83,8 @@ Built with Rust and Tokio for exceptional throughput and reliability.
    - HTTP/HTTPS: Handle confirmation request at endpoint
    - Email: Click confirmation link
 
+![img_1.png](docs/aws_diagram.png)
+
 ## ⚙️ Environment Variables
 
 ```env
@@ -94,10 +98,10 @@ AWS_SES_FROM_EMAIL=your_verified_email
 SERVER_URL=http://localhost:3000
 SERVER_PORT=3000
 DATABASE_URL=sqlite://sqlite3.db
-JWT_SECRET=your_secret_key
+JWT_SECRET=your_secret_key  # Optional
 MAX_SEND_PER_SECOND=12
 
-SENTRY_DSN=your_sentry_dsn
+SENTRY_DSN=your_sentry_dsn  # Optional
 ```
 
 ## 📡 API Guide

@@ -36,6 +36,8 @@ Rust와 Tokio를 기반으로 구축되어 높은 처리량과 안정성을 제�
 - 채널 기반 효율적 태스크 분배
 - AWS SES 발송 속도 제한 자동 준수
 
+![img.png](docs/process_diagram_ko.png)
+
 ## ✨ 주요 기능
 
 - 🚀 대량 이메일 발송 및 예약 발송
@@ -63,7 +65,7 @@ Rust와 Tokio를 기반으로 구축되어 높은 처리량과 안정성을 제�
 - AWS SES 콘솔에서 발신자 이메일 등록
 - 인증 이메일의 확인 링크로 인증 완료
 
-### AWS SNS 설정하기
+### AWS SNS 설정하기 (선택사항)
 
 #### 1️⃣ SNS 주제 생성
 - AWS SNS 콘솔에서 새 주제 생성
@@ -81,6 +83,8 @@ Rust와 Tokio를 기반으로 구축되어 높은 처리량과 안정성을 제�
     - HTTP/HTTPS: 엔드포인트에서 확인 요청 처리
     - Email: 확인 링크 클릭
 
+![img_1.png](docs/aws_diagram.png)
+
 ## ⚙️ 환경 변수
 
 ```env
@@ -94,10 +98,10 @@ AWS_SES_FROM_EMAIL=your_verified_email
 SERVER_URL=http://localhost:3000
 SERVER_PORT=3000
 DATABASE_URL=sqlite://sqlite3.db
-JWT_SECRET=your_secret_key
+JWT_SECRET=your_secret_key  # Optional
 MAX_SEND_PER_SECOND=12
 
-SENTRY_DSN=your_sentry_dsn
+SENTRY_DSN=your_sentry_dsn  # Optional
 ```
 
 ## 📡 API 가이드
