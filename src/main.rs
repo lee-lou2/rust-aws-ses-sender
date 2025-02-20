@@ -1,21 +1,16 @@
+mod app;
 mod config;
 mod handlers;
 mod middlewares;
 mod models;
 mod services;
 mod state;
+mod tests;
 
-use axum::routing::delete;
-use axum::{
-    middleware::from_fn,
-    routing::{get, post},
-    Router,
-};
 use services::receiver::{receive_post_send_message, receive_send_message};
 use services::scheduler::schedule_pre_send_message;
 use std::sync::Arc;
 use tokio::sync::Mutex;
-use tower_http::trace::TraceLayer;
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
 #[tokio::main]
@@ -83,41 +78,7 @@ async fn main() -> Result<(), sqlx::Error> {
         .with(tracing_subscriber::filter::LevelFilter::DEBUG)
         .init();
 
-    // Configure router
-    let app = Router::new()
-        // Messages
-        .route(
-            "/v1/messages",
-            post(handlers::message_handlers::create_message_handler)
-                .layer(from_fn(middlewares::auth_middlewares::jwt_auth_middleware)),
-        )
-        // Topics
-        .route(
-            "/v1/topics/{topic_id}",
-            get(handlers::topic_handlers::retrieve_topic_handler)
-                .layer(from_fn(middlewares::auth_middlewares::jwt_auth_middleware)),
-        )
-        .route(
-            "/v1/topics/{topic_id}",
-            delete(handlers::topic_handlers::stop_topic_handler)
-                .layer(from_fn(middlewares::auth_middlewares::jwt_auth_middleware)),
-        )
-        // Events
-        .route(
-            "/v1/events/open",
-            get(handlers::event_handlers::open_message_handler),
-        )
-        .route(
-            "/v1/events/counts/sent",
-            get(handlers::event_handlers::get_sent_count_handler)
-                .layer(from_fn(middlewares::auth_middlewares::jwt_auth_middleware)),
-        )
-        .route(
-            "/v1/events/results",
-            post(handlers::event_handlers::create_event_handler),
-        )
-        .with_state(state)
-        .layer(TraceLayer::new_for_http());
+    let app = app::app(state).await?;
 
     // Start the server
     let port = &envs.server_port;

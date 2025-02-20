@@ -18,7 +18,6 @@ pub struct Claims {
 /// jwt_auth_middleware
 /// JWT Authentication Middleware
 /// If a token exists, extract claims; if not, just move to the next step
-
 pub async fn jwt_auth_middleware(mut req: Request<Body>, next: Next) -> impl IntoResponse {
     let Some(auth_value) = req.headers().get(AUTHORIZATION) else {
         return (StatusCode::UNAUTHORIZED, "No authorization header").into_response();
