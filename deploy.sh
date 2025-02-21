@@ -13,6 +13,8 @@ fi
 docker run --name ${IMAGE_NAME} \
   -v .:/app \
   -w /app \
+  --cpus="0.5" \
+  --memory="0.5g" \
   -d \
   -p ${INTERNAL_SERVER_PORT}:${EXTERNAL_SERVER_PORT} \
   ${IMAGE_NAME}:${IMAGE_TAG}
