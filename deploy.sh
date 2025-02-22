@@ -11,7 +11,7 @@ if docker ps -a | grep -q ${IMAGE_NAME}; then
 fi
 
 docker run --name ${IMAGE_NAME} \
-  -v .:/app \
+  -v ${PWD}/sqlite3.db:/app/sqlite3.db \
   -w /app \
   --cpus="0.5" \
   --memory="0.5g" \
