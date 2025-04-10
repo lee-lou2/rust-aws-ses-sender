@@ -183,9 +183,9 @@ impl EmailRequest {
         db_pool: &SqlitePool,
         message_id: &str,
     ) -> Result<i32, sqlx::Error> {
-        let request = sqlx::query!(
+        let record = sqlx::query!(
             r#"
-            SELECT id
+            SELECT id as "id: i64"
             FROM email_requests
             WHERE message_id = ?
             "#,
@@ -194,7 +194,12 @@ impl EmailRequest {
         .fetch_one(db_pool)
         .await?;
 
-        Ok(request.id as i32)
+        let id_i64 = record.id;
+        let id_i32: i32 = id_i64.try_into().map_err(|e| {
+            sqlx::Error::Decode(Box::new(e))
+        })?;
+
+        Ok(id_i32)
     }
 }
 
