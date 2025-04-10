@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS email_requests (
 CREATE INDEX idx_requests_status ON email_requests(status);
 CREATE INDEX idx_requests_scheduled_at ON email_requests(scheduled_at DESC);
 CREATE INDEX idx_requests_topic_id ON email_requests(topic_id);
+CREATE INDEX idx_email_requests_message_id ON email_requests(message_id);
 
 CREATE TABLE IF NOT EXISTS email_results (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
