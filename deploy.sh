@@ -14,7 +14,7 @@ docker run --name ${IMAGE_NAME} \
   -v ${PWD}/sqlite3.db:/app/sqlite3.db \
   -w /app \
   --cpus="0.5" \
-  --memory="0.5g" \
+  --memory="1g" \
   -d \
   -p ${INTERNAL_SERVER_PORT}:${EXTERNAL_SERVER_PORT} \
   ${IMAGE_NAME}:${IMAGE_TAG}
