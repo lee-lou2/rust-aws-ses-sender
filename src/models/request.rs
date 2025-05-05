@@ -186,7 +186,7 @@ impl EmailRequest {
     ) -> Result<i32, sqlx::Error> {
         let record = sqlx::query!(
             r#"
-            SELECT id as "id: i64"
+            SELECT id as "id?: i64"
             FROM email_requests
             WHERE message_id = ?
             "#,
@@ -195,8 +195,13 @@ impl EmailRequest {
         .fetch_one(db_pool)
         .await?;
 
-        let id_i64 = record.id;
-        let id_i32 = i32::try_from(id_i64).map_err(|e| sqlx::Error::Decode(Box::new(e)))?;
+        let id_i64_value = record.id.ok_or_else(|| {
+            sqlx::Error::Decode(Box::new(std::io::Error::new(
+                std::io::ErrorKind::NotFound,
+                "ID field was NULL in the database",
+            )))
+        })?;
+        let id_i32 = i32::try_from(id_i64_value).map_err(|e| sqlx::Error::Decode(Box::new(e)))?;
 
         Ok(id_i32)
     }
