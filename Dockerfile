@@ -2,11 +2,13 @@
 FROM rust:1.83 as builder
 
 # Install necessary build dependencies
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    apt-utils \
     pkg-config \
     libssl-dev \
     perl \
-    libfindbin-libs-perl
+    libfindbin-libs-perl \
+    && rm -rf /var/lib/apt/lists/*
 
 # OpenSSL configuration (use system OpenSSL during build)
 ENV OPENSSL_NO_VENDOR=1
@@ -25,10 +27,11 @@ RUN cargo build --release
 FROM debian:bookworm-slim
 
 # Install runtime dependencies (only libssl3 is needed)
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    apt-utils \
     libssl3 \
     ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
 
 # Copy the binary generated in the build stage
 COPY --from=builder /usr/src/app/target/release/rust-aws-ses-sender /usr/local/bin/
