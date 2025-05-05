@@ -1,6 +1,7 @@
 use chrono::{DateTime, Local, NaiveDateTime, TimeZone, Utc};
 use serde::Deserialize;
 use sqlx::SqlitePool;
+use std::convert::TryFrom;
 
 /// EmailMessageStatus
 /// Email message status
@@ -195,9 +196,7 @@ impl EmailRequest {
         .await?;
 
         let id_i64 = record.id;
-        let id_i32: i32 = id_i64.try_into().map_err(|e| {
-            sqlx::Error::Decode(Box::new(e))
-        })?;
+        let id_i32 = i32::try_from(id_i64).map_err(|e| sqlx::Error::Decode(Box::new(e)))?;
 
         Ok(id_i32)
     }
