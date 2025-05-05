@@ -35,7 +35,7 @@ async fn main() -> Result<(), sqlx::Error> {
         .expect("Failed to create pool");
 
     // Initialize channels
-    let (tx_send, rx_send) = tokio::sync::mpsc::channel(1);
+    let (tx_send, rx_send) = tokio::sync::mpsc::channel(10000);
     let (tx_post_send, rx_post_send) = tokio::sync::mpsc::channel(1000);
     let cloned_tx_send = tx_send.clone();
 
