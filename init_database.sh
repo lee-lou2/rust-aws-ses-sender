@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS email_results (
     FOREIGN KEY (request_id) REFERENCES email_requests(id)
 );
 
-CREATE INDEX idx_results_status ON results(status);
+CREATE INDEX idx_results_status ON email_results(status);
 EOF
   echo "Database initialized."
 else
